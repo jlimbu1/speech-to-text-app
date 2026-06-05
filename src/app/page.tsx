@@ -5,6 +5,7 @@ import { Upload, Mic, History } from 'lucide-react';
 import Link from 'next/link';
 import AudioUploader from '@/components/AudioUploader';
 import AudioRecorder from '@/components/AudioRecorder';
+import ApiKeyBanner from '@/components/ApiKeyBanner';
 
 export default function Home() {
   const [tab, setTab] = useState<'upload' | 'record'>('upload');
@@ -21,6 +22,8 @@ export default function Home() {
             Upload audio or record directly from your browser
           </p>
         </div>
+
+        <ApiKeyBanner />
 
         {/* Tabs */}
         <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1 mb-8">
