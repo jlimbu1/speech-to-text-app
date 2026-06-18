@@ -38,7 +38,7 @@ export function hasApiKey(): boolean {
  * Reads the file, sends it as multipart/form-data to Groq, and returns
  * the transcription text.
  */
-export async function transcribeAudio(filePath: string): Promise<TranscriptionResult> {
+export async function transcribeAudio(filePath: string, language?: string): Promise<TranscriptionResult> {
   const apiKey = process.env.GROQ_API_KEY;
 
   if (!apiKey) {
@@ -85,6 +85,9 @@ export async function transcribeAudio(filePath: string): Promise<TranscriptionRe
   const blob = new Blob([fileBuffer], { type: 'audio/webm' });
   formData.append('file', blob, fileName);
   formData.append('model', GROQ_MODEL);
+  if (language) {
+    formData.append('language', language);
+  }
 
   // Make the API call with retry for rate limits
   let lastError: Error | null = null;

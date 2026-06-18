@@ -6,7 +6,7 @@ import { transcribeAudio, hasApiKey, TranscriptionError } from '@/lib/transcript
 
 export async function POST(request: NextRequest) {
   try {
-    const { fileId, fileName } = await request.json();
+    const { fileId, fileName, language } = await request.json();
 
     if (!fileId) {
       return NextResponse.json({ error: 'fileId is required' }, { status: 400 });
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     // Transcribe using Groq Whisper API
     const filePath = path.join(uploadDir, matchingFile);
-    const result = await transcribeAudio(filePath);
+    const result = await transcribeAudio(filePath, language);
 
     // Save to database
     const transcript = await prisma.transcript.create({
